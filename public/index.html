@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#4A90E2" />
+    <meta name="description" content="Alzico - Professional Alzheimer's Detection & Cognitive Assessment Platform" />
+    <title>Alzico - Medical Cognitive Assessment Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #F8F9FA;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4A90E2;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .reset-button {
+            background: #FF6B6B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 auto 20px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .reset-button:hover {
+            background: #FF5252;
+            transform: translateY(-1px);
+        }
+
+        .tab-container {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: #4A90E2;
+            color: white;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4A90E2;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4A90E2;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input {
+            width: 100%;
+            background: #F8F9FA;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: #4A90E2;
+        }
+
+        .demo-credentials {
+            background: #FFF3CD;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #FFEAA7;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .demo-text {
+            font-size: 14px;
+            color: #856404;
+            font-style: italic;
+        }
+
+        .submit-button {
+            width: 100%;
+            background: #4A90E2;
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .submit-button:hover {
+            background: #357ABD;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: #F8D7DA;
+            color: #721C24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message {
+            background: #D4EDDA;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">🧠 Alzico</div>
+            <div class="subtitle">Alzheimer's Detection App</div>
+        </div>
+
+        <button class="reset-button" onclick="resetApp()">🔄 Reset App</button>
+
+        <div class="tab-container">
+            <button class="tab-button active" onclick="switchTab('login')">Login</button>
+            <button class="tab-button" onclick="switchTab('signup')">Sign Up</button>
+        </div>
+
+        <div id="login-form" class="form-container">
+            <div class="form-title">Welcome Back</div>
+            
+            <div class="input-container">
+                <label class="label">Email:</label>
+                <input type="email" id="login-email" class="input" placeholder="Enter your email">
+            </div>
+
+            <div class="input-container">
+                <label class="label">Password:</label>
+                <input type="password" id="login-password" class="input" placeholder="Enter your password">
+            </div>
+
+            <div class="demo-credentials">
+                <div class="demo-text">Demo: demo@alzico.com / password123</div>
+            </div>
+
+            <button class="submit-button" onclick="handleLogin()">Login</button>
+        </div>
+
+        <div id="signup-form" class="form-container" style="display: none;">
+            <div class="form-title">Create Account</div>
+            
+            <div class="input-container">
+                <label class="label">Full Name:</label>
+                <input type="text" id="signup-fullname" class="input" placeholder="Enter your full name">
+            </div>
+
+            <div class="input-container">
+                <label class="label">Email:</label>
+                <input type="email" id="signup-email" class="input" placeholder="Enter your email">
+            </div>
+
+            <div class="input-container">
+                <label class="label">Password:</label>
+                <input type="password" id="signup-password" class="input" placeholder="Enter your password">
+            </div>
+
+            <div class="input-container">
+                <label class="label">Confirm Password:</label>
+                <input type="password" id="signup-confirm-password" class="input" placeholder="Confirm your password">
+            </div>
+
+            <button class="submit-button" onclick="handleSignup()">Sign Up</button>
+        </div>
+
+        <div id="error-message" class="error-message"></div>
+        <div id="success-message" class="success-message"></div>
+    </div>
+
+    <script>
+        let currentTab = 'login';
+
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show/hide forms
+            if (tab === 'login') {
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('signup-form').style.display = 'none';
+            } else {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('signup-form').style.display = 'block';
+            }
+            
+            // Clear messages
+            hideMessages();
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            
+            if (!email || !password) {
+                showError('Please fill in all fields');
+                return;
+            }
+            
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('Please enter a valid email address');
+                return;
+            }
+            
+            // Demo login
+            if (email === 'demo@alzico.com' && password === 'password123') {
+                showSuccess('Login successful! Redirecting to Alzico dashboard...');
+                setTimeout(() => {
+                    // Redirect to the existing demo.html dashboard with all tests
+                    window.location.href = 'demo.html';
+                }, 1500);
+            } else {
+                showError('Invalid email or password. Try demo@alzico.com / password123');
+            }
+        }
+
+        function handleSignup() {
+            const fullName = document.getElementById('signup-fullname').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value.trim();
+            const confirmPassword = document.getElementById('signup-confirm-password').value.trim();
+            
+            if (!fullName || !email || !password || !confirmPassword) {
+                showError('Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('Passwords do not match');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('Password must be at least 6 characters long');
+                return;
+            }
+            
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('Please enter a valid email address');
+                return;
+            }
+            
+            showSuccess('Account created successfully! Redirecting to Alzico dashboard...');
+            setTimeout(() => {
+                // Redirect to the existing demo.html dashboard with all tests
+                window.location.href = 'demo.html';
+            }, 1500);
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        function hideMessages() {
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        }
+
+        function resetApp() {
+            // Reset all form fields
+            document.getElementById('login-email').value = '';
+            document.getElementById('login-password').value = '';
+            document.getElementById('signup-fullname').value = '';
+            document.getElementById('signup-email').value = '';
+            document.getElementById('signup-password').value = '';
+            document.getElementById('signup-confirm-password').value = '';
+            
+            // Switch back to login tab
+            switchTab('login');
+            
+            // Clear messages
+            hideMessages();
+            
+            alert('App reset successfully!');
+        }
+
+        // Add Enter key support for login
+        document.getElementById('login-password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleLogin();
+            }
+        });
+
+        // Add Enter key support for signup
+        document.getElementById('signup-confirm-password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleSignup();
+            }
+        });
+    </script>
+</body>
+</html> 
